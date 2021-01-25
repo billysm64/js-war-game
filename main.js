@@ -1,3 +1,15 @@
+/*
+Sunday, January 24, 2021
+
+I have run into some severe complications with my code, and in my personal life this weekend, which I did not expect. The deadline was dangerously close tonight as I struggled, so I tried desperately to quickly pull together code anyway without regard to clean refactoring or self-repeating, just to have a working assignment to turn in. That was a mistake. The code below is the result of two things not working properly: 1.) Functions in general, and 2.) Constructors.
+
+Constructors were having strings coming back as "[object Object]" and I'm not sure why. I am also unsure why functions were not being recognized in the while loop at some random point in time during the code, which is the unfortunate straw that broke the camel's back, and so I hurriedly threw most of the bottom portion of this together, functionless and constructorless, since I was running out of time.
+
+The huge flaw with the code below is that the lists are not being properly sorted through. If it weren't for that issue, the code below (while still very messy) should run fine.
+
+The whole bottom portion of this assignment should probably be redone anyway.
+*/
+
 // const playerOne = prompt("Player 1: ")
 // const playerTwo = prompt("Player 2: ")
 
@@ -70,16 +82,24 @@ playerTwoCards = totalShuffledCards.slice(halfwayThrough, totalShuffledCards.len
 //   this.status = status;
 // }
 
-// function Player(cards) {
+// numberOfCards1 = 0
+//
+// function Player(name, cards, numberOfCards) {
+//   this.name = name;
 //   this.cards = cards;
+//   this.numberOfCards = numberOfCards;
 // };
 //
 // let playerOne = new Player ({
+//   name: "Sarah",
 //   cards: playerOneCards,
+//   numberOfCards: 26,
 // });
 //
 // let playerTwo = new Player ({
+//   name: "Mady",
 //   cards: playerTwoCards,
+//   numberOfCards: 26,
 // })
 
 // console.log(playerOne.cards)
@@ -90,40 +110,86 @@ playerTwoCards = totalShuffledCards.slice(halfwayThrough, totalShuffledCards.len
 let gameRunning = true;
 
 function cardConvert(card) {
-  console.log(card)
+  console.log(card);
   return cards.indexOf(card[0]);
-}
+};
 
 // for (let item of cards) {
 //   console.log(cardConvert(item))
 // }; //
 
-function war() {
-  let looll = "";
+let numberOfCards1 = 26;
+let numberOfCards2 = 26;
+let war = false;
+let addNum = 1;
+
+function test() {
+  let lolololol = "''";
 }
 
 function regularGame(playerOneCards, playerTwoCards, card) {
-  card1 = cardConvert(playerOneCards[card]);
-  console.log(card1)
-  card2 = cardConvert(playerTwoCards[card]);
-  console.log(card2)
-  if (card1 > card2) {
-    console.log(`${playerOne} won! ${playerOne} gets ${playerOneCards[card]} and ${playerTwoCards[card]}.`)
-  } else if (card1 < card2) {
-    console.log(`${playerTwo} won! ${playerTwo} gets ${playerOneCards[card[0]]} and ${playerTwoCards[card]}.`)
-  } else {
-    console.log("WARRRRRRRR!!!!!!!!")
-  }
-}
+  let x = "";
+
+};
 
 while (gameRunning) {
   // FIRST: Figure out true number of card
   // SECOND: Calculate who won based on the same index of the shuffle.
   // THIRD: Take out index of one, push to other.
-  // FOURTH:
+  // FOURTH
   for (let card in playerOneCards) {
+    if ((numberOfCards1 <= 0) || (numberOfCards2 <= 0)) {
+      gameRunning = false;
+    }
+    if ((typeof(playerTwoCards[card]) === "undefined") || (typeof(playerOneCards[card]) === "undefined")) {
+      break;
+    };
+    if (war) {
+      addnum = 4;
+    } else {
+      addnum = 1;
+    }
     indexOfCard = playerOneCards.indexOf(card)
-    regularGame(playerOneCards, playerTwoCards, card);
+    //for some reason the function I wrote for all this before completely broke, and the while loop wouldn't accept any functions as existing, randomly. So I had to put this all back here.
+    console.log(`${card}`)
+    card1 = cardConvert(playerOneCards[card]);
+    console.log(card1)
+    card2 = cardConvert(playerTwoCards[card]);
+    console.log(card2)
+    console.log(playerOneCards)
+    console.log(playerTwoCards)
+    if (card1 > card2) {
+      if (war) {
+        console.log(`${playerOne} won! ${playerOne} got 4 more cards.`)
+      } else {
+        console.log(`${playerOne} won! ${playerOne} gets ${playerOneCards[card[0]]} and ${playerTwoCards[card[0]]}.`)
+      };
+      for (let i = 0; i < addnum-1; i++) {
+        playerTwoCards.unshift();
+        playerOneCards.push(playerTwoCards[card])
+      }
+      numberOfCards1 += addnum
+      numberOfCards2 -= addnum
+      war = false;
+    } else if (card1 < card2) {
+      if (war) {
+        console.log(`${playerTwo} won! ${playerTwo} got 4 more cards.`)
+      } else {
+        console.log(`${playerTwo} won! ${playerTwo} gets ${playerOneCards[card[0]]} and ${playerTwoCards[card[0]]}.`)
+      }
+      for (let i = 0; i < addnum-1; i++) {
+        playerOneCards.unshift();
+        playerTwoCards.push(playerOneCards[card]);
+      };
+      numberOfCards2 += addnum
+      numberOfCards1 -= addnum
+      war = false;
+    } else {
+      war = true;
+      console.log("WARRRRRRRR!!!!!!!!")
+    };
+    console.log(`${playerOne}: ${numberOfCards1}; ${playerTwo}: ${numberOfCards2}`)
+    // regularGame(playerOneCards, playerTwoCards, card);
   }
   //
   /*
@@ -141,7 +207,6 @@ Press q to quit. Press any key to play:
 Sarah drew 5 of clubs. Mady drew 9 of spades
 Sarah has 24 cards. Mady has 28 cards
   */
-  break;
 }
 
 //while not game running (stopped when playerone 0 cards and not playertwo 0 cards):
