@@ -1,20 +1,10 @@
-/*
-Sunday, January 24, 2021
-
-I have run into some severe complications with my code, and in my personal life this weekend, which I did not expect. The deadline was dangerously close tonight as I struggled, so I tried desperately to quickly pull together code anyway without regard to clean refactoring or self-repeating, just to have a working assignment to turn in. That was a mistake. The code below is the result of two things not working properly: 1.) Functions in general, and 2.) Constructors.
-
-Constructors were having strings coming back as "[object Object]" and I'm not sure why. I am also unsure why functions were not being recognized in the while loop at some random point in time during the code, which is the unfortunate straw that broke the camel's back, and so I hurriedly threw most of the bottom portion of this together, functionless and constructorless, since I was running out of time.
-
-The huge flaw with the code below is that the lists are not being properly sorted through. If it weren't for that issue, the code below (while still very messy) should run fine.
-
-The whole bottom portion of this assignment should probably be redone anyway.
-*/
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
 
 // const playerOne = prompt("Player 1: ")
 // const playerTwo = prompt("Player 2: ")
 
-const playerOne = "Mady";
-const playerTwo = "Sarah";
+const playerOneName = "Mady";
+const playerTwoName = "Sarah";
 
 // Cards and their types defined in two arrays
 const cards = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"]
@@ -82,32 +72,28 @@ playerTwoCards = totalShuffledCards.slice(halfwayThrough, totalShuffledCards.len
 //   this.status = status;
 // }
 
-// numberOfCards1 = 0
-//
-// function Player(name, cards, numberOfCards) {
-//   this.name = name;
-//   this.cards = cards;
-//   this.numberOfCards = numberOfCards;
-// };
-//
-// let playerOne = new Player ({
-//   name: "Sarah",
-//   cards: playerOneCards,
-//   numberOfCards: 26,
-// });
-//
-// let playerTwo = new Player ({
-//   name: "Mady",
-//   cards: playerTwoCards,
-//   numberOfCards: 26,
-// })
+function Player({name, cards, numberOfCards} = {}) {
+  this.name = name;
+  this.cards = cards;
+  this.numberOfCards = numberOfCards;
+};
 
-// console.log(playerOne.cards)
-// console.log(playerTwo.cards)
+let playerOne = new Player ({
+  name: prompt("Player 1: "),
+  cards: playerOneCards,
+});
+
+let playerTwo = new Player ({
+  name: prompt("Player 2: "),
+  cards: playerTwoCards,
+})
+
+console.log(playerOne.cards)
+console.log(playerTwo.cards)
 
 //gamerunning variable
 
-let gameRunning = true;
+// let gameRunning = true;
 
 function cardConvert(card) {
   console.log(card);
@@ -132,89 +118,30 @@ function regularGame(playerOneCards, playerTwoCards, card) {
 
 };
 
-while (gameRunning) {
-  // FIRST: Figure out true number of card
-  // SECOND: Calculate who won based on the same index of the shuffle.
-  // THIRD: Take out index of one, push to other.
-  // FOURTH
-  for (let card in playerOneCards) {
-    if ((numberOfCards1 <= 0) || (numberOfCards2 <= 0)) {
-      gameRunning = false;
-    }
-    if ((typeof(playerTwoCards[card]) === "undefined") || (typeof(playerOneCards[card]) === "undefined")) {
-      break;
-    };
-    if (war) {
-      addnum = 4;
-    } else {
-      addnum = 1;
-    }
-    indexOfCard = playerOneCards.indexOf(card)
-    //for some reason the function I wrote for all this before completely broke, and the while loop wouldn't accept any functions as existing, randomly. So I had to put this all back here.
-    console.log(`${card}`)
-    card1 = cardConvert(playerOneCards[card]);
-    console.log(card1)
-    card2 = cardConvert(playerTwoCards[card]);
-    console.log(card2)
-    console.log(playerOneCards)
-    console.log(playerTwoCards)
-    if (card1 > card2) {
-      if (war) {
-        console.log(`${playerOne} won! ${playerOne} got 4 more cards.`)
-      } else {
-        console.log(`${playerOne} won! ${playerOne} gets ${playerOneCards[card[0]]} and ${playerTwoCards[card[0]]}.`)
-      };
-      for (let i = 0; i < addnum-1; i++) {
-        playerTwoCards.unshift();
-        playerOneCards.push(playerTwoCards[card])
-      }
-      numberOfCards1 += addnum
-      numberOfCards2 -= addnum
-      war = false;
-    } else if (card1 < card2) {
-      if (war) {
-        console.log(`${playerTwo} won! ${playerTwo} got 4 more cards.`)
-      } else {
-        console.log(`${playerTwo} won! ${playerTwo} gets ${playerOneCards[card[0]]} and ${playerTwoCards[card[0]]}.`)
-      }
-      for (let i = 0; i < addnum-1; i++) {
-        playerOneCards.unshift();
-        playerTwoCards.push(playerOneCards[card]);
-      };
-      numberOfCards2 += addnum
-      numberOfCards1 -= addnum
-      war = false;
-    } else {
-      war = true;
-      console.log("WARRRRRRRR!!!!!!!!")
-    };
-    console.log(`${playerOne}: ${numberOfCards1}; ${playerTwo}: ${numberOfCards2}`)
-    // regularGame(playerOneCards, playerTwoCards, card);
-  }
-  //
-  /*
-  Sarah drew 8 of clubs. Mady drew Queen of clubs
-  Sarah has 25 cards. Mady has 27 cards
-  * Sarah - 2, Mady + 2
-  Sarah drew 9 of clubs. Mady drew King of diamonds
-  Sarah has 24 cards. Mady has 24 cards
-  This means WAR!
-  Sarah drew 3 unknown cards, plus King of hearts. Mady drew 3 unknown cards, plus 6 of hearts.
-  (6 > 3, Mady cards + 8, Sarah - 8)
-Sarah drew King of hearts. Mady drew 6 of hearts
-Sarah has 25 cards. Mady has 27 cards
-Press q to quit. Press any key to play:
-Sarah drew 5 of clubs. Mady drew 9 of spades
-Sarah has 24 cards. Mady has 28 cards
-  */
-}
+//h1, ul, li, h2, img, p, table, main, section, footer
 
-//while not game running (stopped when playerone 0 cards and not playertwo 0 cards):
-//  (at least work out giving out two cards and deciding who takes two)
-//  cardValue = 0, have if statements that define "Ace" as a card value of 14 for example, while nums are kept the same
- // for loop inside while loop, that repeats through first player's cards every time comparing to player 2 cards
-//  placement variable for what's out on the table
-//  make the comparison based on cardValue of each
-//  if > Player 1 takes, if < Player 2 takes
-//  if same num: war
-//  logic of 8 cards: 2 cards already put down + iterate through 3 more
+// "2", "Jack", "1"
+// "3", "5" "2"
+
+// take one
+
+//can you play war, or does playerOne win?
+
+while ((playerOne.cards.length != 0) && (playerTwo.cards.length != 0)) {
+  playerOneCard = playerOne.cards.shift();
+  playerTwoCard = playerTwo.cards.shift();
+  if (cardConvert(playerOneCard[0]) > cardConvert(playerTwoCard[0])) {
+    console.log(`${playerOne.name} won this round`);
+    playerOne.cards.push(playerOneCard);
+    playerOne.cards.push(playerTwoCard);
+  } else if (cardConvert(playerOneCard[0]) < cardConvert(playerTwoCard[0])) {
+    console.log(`${playerTwo.name} won this round`);
+    playerTwo.cards.push(playerTwoCard);
+    playerTwo.cards.push(playerOneCard);
+  } else {
+    console.log(`WARRRRRRRRRRR!`)
+  };
+  console.log(`${playerOne.name} has ${playerOneCard} with ${playerOne.cards.length} cards`);
+  console.log(`${playerTwo.name} has ${playerTwoCard} with ${playerTwo.cards.length} cards`);
+
+};
