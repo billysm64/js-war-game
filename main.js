@@ -1,10 +1,6 @@
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
 
-// const playerOne = prompt("Player 1: ")
-// const playerTwo = prompt("Player 2: ")
-
-const playerOneName = "Mady";
-const playerTwoName = "Sarah";
+console.log("I'm working okay now.")
 
 // Cards and their types defined in two arrays
 const cards = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"]
@@ -53,6 +49,7 @@ let totalShuffledCards = []
 
 cardShuffle(cardPossibilities, totalShuffledCards)
 
+console.log(totalShuffledCards.length + "is the length of totaLSHUFFLEDCARDS")
 let playerOneCards = [] //player One and player Two cards, init
 let playerTwoCards = []
 
@@ -125,7 +122,14 @@ function regularGame(playerOneCards, playerTwoCards, card) {
 
 // take one
 
-//can you play war, or does playerOne win?
+// can you play war, or does playerOne win?
+//
+
+war = true
+
+let i = 10000;
+
+// (playerOne.cards.length != 0) && (playerTwo.cards.length != 0)
 
 while ((playerOne.cards.length != 0) && (playerTwo.cards.length != 0)) {
   playerOneCard = playerOne.cards.shift();
@@ -140,8 +144,16 @@ while ((playerOne.cards.length != 0) && (playerTwo.cards.length != 0)) {
     playerTwo.cards.push(playerOneCard);
   } else {
     console.log(`WARRRRRRRRRRR!`)
+    if (playerOne.cards.length < 8) {
+      console.log(`${playerOne.name} wins the game by war!`)
+      break
+    } else if (playerTwo.cards.length < 8) {
+      console.log(`${playerOne.name} wins the game by war!`)
+      break
+    } else {
+      console.log(`No one won by war.`)
+    }
   };
   console.log(`${playerOne.name} has ${playerOneCard} with ${playerOne.cards.length} cards`);
   console.log(`${playerTwo.name} has ${playerTwoCard} with ${playerTwo.cards.length} cards`);
-
 };
